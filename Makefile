@@ -54,7 +54,7 @@ BOOST_INC = /usr/include
 BOOST_LIB = /usr/lib
 OPENCV_LIB = $$(pkg-config --libs opencv)
 OPENCV_INC = $$(pkg-config --cflags opencv)
-NUMPY_INCLUDE = /usr/local/lib/python$(PYTHON_VERSION)/dist-packages/numpy/core/include
+NUMPY_INCLUDE = /usr/lib/python$(PYTHON_VERSION)/site-packages/numpy/core/include
 
 #now compiling python liblinear wrapper
 
@@ -64,7 +64,7 @@ PY_LIBLINEAR_SRC = $(PY_LIBLINEAR_DIR)/py_liblinear.cpp $(PY_LIBLINEAR_DIR)/libl
 PY_LIBLINEAR_OBJ = py_liblinear.o liblinear_wrapper.o
 
 $(PY_LIBLINEAR_TARGET).so: $(PY_LIBLINEAR_OBJ)
-	g++ -shared -L$(BOOST_LIB) $(PY_LIBLINEAR_OBJ) -lboost_python -L/usr/lib/python$(PYTHON_VERSION)/config -lpython$(PYTHON_VERSION) -o $(PY_LIBLINEAR_TARGET).so $(OPENCV_LIB) liblinear.a
+	g++ -shared -L$(BOOST_LIB) $(PY_LIBLINEAR_OBJ) -lboost_python-$(PYTHON_VERSION) -L/usr/lib/python$(PYTHON_VERSION)/config -lpython$(PYTHON_VERSION) -o $(PY_LIBLINEAR_TARGET).so $(OPENCV_LIB) liblinear.a
 
 $(PY_LIBLINEAR_OBJ): $(PY_LIBLINEAR_SRC)
 	g++ -I$(PYTHON_INCLUDE) -I$(BLAS_INCLUDE) -I$(LIBLINEAR_INCLUDE) -I$(BOOST_INC) -I$(NUMPY_INCLUDE) $(OPENCV_CFLAGS) -fPIC -c -std=c++0x $(PY_LIBLINEAR_SRC)
@@ -75,7 +75,7 @@ FTIG_SRC = $(FTIG_DIR)/filter_tig.cpp $(FTIG_DIR)/FilterTIG.cpp
 FTIG_OBJ = filter_tig.o FilterTIG.o
 
 $(FTIG_TARGET).so: $(FTIG_OBJ)
-	g++ -shared $(FTIG_OBJ) -L$(BOOST_LIB) -lboost_python -L/usr/lib/python$(PYTHON_VERSION)/config -lpython$(PYTHON_VERSION) -o $(FTIG_TARGET).so $(OPENCV_LIB)
+	g++ -shared $(FTIG_OBJ) -L$(BOOST_LIB) -lboost_python-$(PYTHON_VERSION) -L/usr/lib/python$(PYTHON_VERSION)/config -lpython$(PYTHON_VERSION) -o $(FTIG_TARGET).so $(OPENCV_LIB)
 
 $(FTIG_OBJ): $(FTIG_SRC)
 	g++ -I$(PYTHON_INCLUDE) -I$(NUMPY_INCLUDE) -I$(BOOST_INC) $(OPENCV_CFLAGS) -fPIC -c -std=c++0x $(FTIG_SRC)

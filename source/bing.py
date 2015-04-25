@@ -239,7 +239,7 @@ if __name__=="__main__":
     params, image = parse_cmdline_inputs()
     results_dir = params["results_dir"]
     if not os.path.exists(results_dir):
-        print "The results directory that should contains weights and sizes indeces does not exist. Be sure to have already performed training. "
+        print "The results directory (%s) that should contains weights and sizes indeces does not exist. Be sure to have already performed training. " % results_dir
         sys.exit(2)
     
     if not os.path.exists(params["1st_stage_weights_fn"]):
@@ -262,6 +262,7 @@ if __name__=="__main__":
     
     b = Bing(w_1st,sizes,w_2nd, num_bbs_per_size_1st_stage= params["num_win_psz"], num_bbs_final = params["num_bbs"])
     bbs, scores = b.predict(image)
+    print bbs
     
     for bb in bbs:
         cv2.rectangle(image,(bb[0],bb[1]),(bb[2],bb[3]),color=(random.randint(0,255),random.randint(0,255),random.randint(0,255)))
