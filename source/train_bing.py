@@ -142,7 +142,7 @@ class TrainBing(object):
         self.annotations = annotations
         
         #too many threads will not help, because there are many accesses on disks.
-        num_threads = min(self.num_cpus-1, 4)
+        num_threads = min(self.num_cpus-1, 16)
         
         print "Starting features extraction on multiple threads. Number of threads: %s."%num_threads
         #threads pool (multiprocessing.dummy), so shared memory among them        
